@@ -15,6 +15,11 @@ public class FoodBoothController {
 
     private final FoodBoothService foodBoothService;
 
+    @PostMapping("sample")
+    public ResponseEntity<?> sample() {
+        return ResponseEntity.ok("hello world!");
+    }
+
     @PostMapping("sample/create")
     public ResponseEntity<?> create(@RequestBody FoodBoothCreateReq req) {
         foodBoothService.createFoodBooth(req);
