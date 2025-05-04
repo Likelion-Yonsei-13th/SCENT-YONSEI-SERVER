@@ -31,6 +31,12 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      # 4.1) EC2 호스트 키를 known_hosts에 등록
+      - name: Add EC2 host to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
+
       # 5) 빌드된 JAR을 서버로 복사
       - name: Copy JAR to server
         run: |
