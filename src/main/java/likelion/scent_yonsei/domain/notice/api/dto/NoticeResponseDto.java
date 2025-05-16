@@ -22,6 +22,7 @@ public class NoticeResponseDto {
 
     @JsonProperty("updated_at")
     private String updatedAt;
+    
 
     public static NoticeResponseDto fromEntity(Notice notice) {
         return new NoticeResponseDto(

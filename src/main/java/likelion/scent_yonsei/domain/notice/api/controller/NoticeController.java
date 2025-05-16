@@ -23,6 +23,7 @@ public class NoticeController {
     /**
      * 공지사항 목록 조회
      */
+    
     @GetMapping
     public ResponseEntity<NoticeListResponse<List<NoticeResponseDto>>> getNotices(
             @RequestParam(required = false, defaultValue = "") String search,

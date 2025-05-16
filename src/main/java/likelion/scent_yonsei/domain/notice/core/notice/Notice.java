@@ -3,6 +3,7 @@ package likelion.scent_yonsei.domain.notice.core.notice;
 import jakarta.persistence.*;
 import lombok.*;
 
+
 @Entity
 @Table(name = "notice")
 @Getter

@@ -12,4 +12,5 @@ public class NoticeListResponse<T> {
     private String search;
     private String category;
     private T data;
+    
 }

@@ -26,6 +26,7 @@ public class NoticeDetailResponseDto {
     private String updatedAt;
 
     private List<String> photo;
+    
 
     public static NoticeDetailResponseDto fromEntity(Notice notice, List<String> photoUrls) {
         return NoticeDetailResponseDto.builder()

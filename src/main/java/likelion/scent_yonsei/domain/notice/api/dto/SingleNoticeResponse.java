@@ -10,4 +10,5 @@ public class SingleNoticeResponse<T> {
     private boolean success;
     private String message;
     private T data;
+    
 }
