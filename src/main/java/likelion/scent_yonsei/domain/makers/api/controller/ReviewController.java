@@ -1,6 +1,8 @@
 package likelion.scent_yonsei.domain.makers.api.controller;
 
+import likelion.scent_yonsei.common.Response;
 import likelion.scent_yonsei.domain.makers.api.dto.ReviewReq;
+import likelion.scent_yonsei.domain.makers.api.dto.ReviewRes;
 import likelion.scent_yonsei.domain.makers.api.service.ReviewService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,9 +19,7 @@ public class ReviewController {
     }
 
     @PostMapping("/review")
-    public ResponseEntity<?> createReviews(@RequestBody ReviewReq req){
-
-        Long reviewId = reviewService.save(req.content());
-        return ResponseEntity.ok(reviewId);
+    public ResponseEntity<Response<ReviewRes>> createReviews(@RequestBody ReviewReq req){
+        return ResponseEntity.ok(reviewService.save(req.content()));
     }
 }
