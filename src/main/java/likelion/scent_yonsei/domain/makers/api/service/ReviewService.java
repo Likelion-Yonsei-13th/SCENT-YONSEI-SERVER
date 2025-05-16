@@ -1,7 +1,7 @@
-package likelion.scent_yonsei.makers.api.service;
+package likelion.scent_yonsei.domain.makers.api.service;
 
-import likelion.scent_yonsei.makers.core.Review;
-import likelion.scent_yonsei.makers.core.ReviewRepository;
+import likelion.scent_yonsei.domain.makers.core.Review;
+import likelion.scent_yonsei.domain.makers.core.ReviewRepository;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,4 +1,4 @@
-package likelion.scent_yonsei.makers.core;
+package likelion.scent_yonsei.domain.makers.core;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

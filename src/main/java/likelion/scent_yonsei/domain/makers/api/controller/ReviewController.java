@@ -1,11 +1,10 @@
-package likelion.scent_yonsei.makers.api.controller;
+package likelion.scent_yonsei.domain.makers.api.controller;
 
-import likelion.scent_yonsei.makers.api.dto.ReviewReq;
-import likelion.scent_yonsei.makers.api.service.ReviewService;
+import likelion.scent_yonsei.domain.makers.api.dto.ReviewReq;
+import likelion.scent_yonsei.domain.makers.api.service.ReviewService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
