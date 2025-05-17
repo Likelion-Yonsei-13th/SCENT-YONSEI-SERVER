@@ -9,10 +9,6 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
-    env:
-      REMOTE_APP_PATH: ${{ secrets.REMOTE_APP_PATH }}
-      REMOTE_CONFIG:  ${{ secrets.REMOTE_CONFIG_PATH }}
-
     steps:
       # 1) Checkout repository
       - uses: actions/checkout@v3
@@ -44,7 +40,7 @@ jobs:
       - name: Copy JAR to server
         run: |
           scp build/libs/*.jar \
-            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ env.REMOTE_APP_PATH }}/scent-yonsei.jar
+            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.REMOTE_APP_PATH }}/scent-yonsei.jar
 
       # 7) Restart the service on the EC2 instance
       - name: Restart service on server
@@ -54,10 +50,10 @@ jobs:
             pkill -f 'scent-yonsei.jar' || true
 
             # (2) Start new instance, logging to the same directory as the JAR
-            nohup java -jar $REMOTE_APP_PATH/scent-yonsei.jar \
-              --spring.config.location=file:$REMOTE_CONFIG \
+            nohup java -jar ${{ secrets.REMOTE_APP_PATH }}/scent-yonsei.jar \
+              --spring.config.location=file:${{ secrets.REMOTE_CONFIG_PATH }} \
               --spring.profiles.active=prod \
-              > $REMOTE_APP_PATH/app.log 2>&1 &
+              > ${{ secrets.REMOTE_APP_PATH }}/app.log 2>&1 &
 
             exit
           EOF
