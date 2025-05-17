@@ -6,6 +6,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "shows")
@@ -41,9 +43,6 @@ public class Show {
     @Column(columnDefinition = "TEXT")
     private String instagram;
 
-    @Column(length = 100)
-    private String photo;
-
     private Long liked;
 
     @CreationTimestamp
@@ -56,5 +55,12 @@ public class Show {
 
     @Column(name = "is_student")
     private Boolean student;
+
+    @OneToMany(
+            mappedBy = "show",
+            cascade   = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<ShowPhoto> photo = new ArrayList<>();
 
 }
