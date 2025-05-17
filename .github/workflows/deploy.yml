@@ -40,11 +40,6 @@ jobs:
           scp build/libs/*.jar \
             ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ env.REMOTE_APP_PATH }}/scent-yonsei.jar
 
-      - name: Copy application.yml to server
-        run: |
-          scp src/main/resources/application.yml \
-            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ env.REMOTE_CONFIG }}
-
       - name: Restart service on server
         run: |
           ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
@@ -56,5 +51,6 @@ jobs:
               --spring.config.location=file:$REMOTE_CONFIG \
               --spring.profiles.active=prod \
               > /home/ubuntu/SCENT-YONSEI-SERVER/app.log 2>&1 &
+
             exit
           EOF
