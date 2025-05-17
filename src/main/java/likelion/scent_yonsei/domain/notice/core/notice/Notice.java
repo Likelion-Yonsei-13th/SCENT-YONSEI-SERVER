@@ -3,7 +3,6 @@ package likelion.scent_yonsei.domain.notice.core.notice;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 @Entity
 @Table(name = "notice")
 @Getter
@@ -14,15 +13,19 @@ public class Notice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "title")
     private String title;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
+    @Column(name = "importance")
     private boolean importance;
 
+    @Column(name = "category")
     private String category;
 
     @Column(name = "created_at")

@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
 @Service
 @RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
@@ -23,7 +22,7 @@ public class NoticeServiceImpl implements NoticeService {
     private final NoticePhotoRepository noticePhotoRepository;
 
     /**
-     * 공지사항 목록 필터링 조회
+     * 공지사항 목록 필터링 조회 (대표 사진 포함)
      */
     @Override
     public List<NoticeResponseDto> getFilteredNotices(String search, String category) {
@@ -43,7 +42,11 @@ public class NoticeServiceImpl implements NoticeService {
         }
 
         return notices.stream()
-                .map(NoticeResponseDto::fromEntity)
+                .map(notice -> {
+                    List<NoticePhoto> photos = noticePhotoRepository.findAllByNoticeId(notice.getId());
+                    String firstPhotoUrl = photos.isEmpty() ? null : photos.get(0).getPhoto(); // 기존 getPhoto() 그대로 유지
+                    return NoticeResponseDto.fromEntity(notice, firstPhotoUrl); // photoUrl 포함한 생성자 사용
+                })
                 .collect(Collectors.toList());
     }
 
