@@ -14,43 +14,50 @@ jobs:
       REMOTE_CONFIG:  ${{ secrets.REMOTE_CONFIG_PATH }}
 
     steps:
+      # 1) Checkout repository
       - uses: actions/checkout@v3
 
+      # 2) Install JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
 
+      # 3) Build with Gradle (skip tests)
       - name: Build with Gradle
         run: ./gradlew clean bootJar -x test
 
+      # 4) Load SSH key
       - name: Add SSH key
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      # 5) Add EC2 host to known_hosts
       - name: Add EC2 host to known hosts
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
+      # 6) Copy the built JAR to the EC2 instance
       - name: Copy JAR to server
         run: |
           scp build/libs/*.jar \
             ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ env.REMOTE_APP_PATH }}/scent-yonsei.jar
 
+      # 7) Restart the service on the EC2 instance
       - name: Restart service on server
         run: |
           ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
-            # 1) 이전 프로세스 종료
+            # (1) Stop any existing instance
             pkill -f 'scent-yonsei.jar' || true
 
-            # 2) JAR 재시작 (외부 application.yml 참조)
+            # (2) Start new instance, logging to the same directory as the JAR
             nohup java -jar $REMOTE_APP_PATH/scent-yonsei.jar \
               --spring.config.location=file:$REMOTE_CONFIG \
               --spring.profiles.active=prod \
-              > /home/ubuntu/SCENT-YONSEI-SERVER/app.log 2>&1 &
+              > $REMOTE_APP_PATH/app.log 2>&1 &
 
             exit
           EOF
