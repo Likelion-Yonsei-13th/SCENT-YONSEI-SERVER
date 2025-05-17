@@ -56,6 +56,7 @@ public class ShowService {
                             .min(Comparator.comparingLong(ShowPhoto::getId))
                             .map(ShowPhoto::getPhotoUrl)
                             .orElse("");
+
                     return new ShowRes(
                             s.getId(),
                             s.getTitle(),

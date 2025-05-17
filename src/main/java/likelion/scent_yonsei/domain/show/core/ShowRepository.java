@@ -16,14 +16,8 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
     @Query("""
         SELECT s
         FROM Show s
-        JOIN s.photo sp
         WHERE s.startAt <= :now
           AND s.finishAt >= :now
-          AND sp.id = (
-            SELECT MIN(sp2.id)
-              FROM ShowPhoto sp2
-             WHERE sp2.show = s
-          )
     """)
     List<Show> findLiveShowRes(@Param("now") LocalDateTime now);
 
