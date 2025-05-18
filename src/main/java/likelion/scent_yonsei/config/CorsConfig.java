@@ -14,9 +14,10 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of(
-                "http://localhost:5173"
-        )); // 허용할 Origin
+//        config.setAllowedOrigins(List.of(
+//                "http://localhost:3000"
+//        )); // 허용할 Origin
+        config.addAllowedOriginPattern("*"); // 임시로 모든 origin 허용
         config.setAllowedMethods(List.of("GET", "POST", "DELETE")); // 허용할 HTTP Method
         config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "refreshToken")); // 허용할 요청 헤더
         config.setExposedHeaders(List.of(
