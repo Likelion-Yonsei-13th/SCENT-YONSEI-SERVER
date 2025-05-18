@@ -22,6 +22,6 @@ public class ReviewService {
         review.setReview(content);
         reviewRepository.save(review);
         ReviewRes data = new ReviewRes(review.getId());
-        return new Response<>(200, true, "리뷰 생성 성공", data);
+        return new Response<>(201, true, "리뷰 생성 성공", data);
     }
 }
