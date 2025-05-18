@@ -20,6 +20,6 @@ public class ShowPhoto {
     @JoinColumn(name = "show_id", nullable = false)
     private Show show;
 
-    @Column(name = "photo_url", length = 100, nullable = false)
-    private String photoUrl;
+    @Column(name = "photo", length = 100, nullable = false)
+    private String photo;
 }

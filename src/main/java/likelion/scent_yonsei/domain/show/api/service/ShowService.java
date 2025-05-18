@@ -38,7 +38,7 @@ public class ShowService {
 
                     String photo = s.getPhoto().stream()
                             .min(Comparator.comparingLong(ShowPhoto::getId))
-                            .map(ShowPhoto::getPhotoUrl)
+                            .map(ShowPhoto::getPhoto)
                             .orElse("");
 
                     return new LiveRes(
@@ -54,7 +54,7 @@ public class ShowService {
                 .map(s -> {
                     String photo = s.getPhoto().stream()
                             .min(Comparator.comparingLong(ShowPhoto::getId))
-                            .map(ShowPhoto::getPhotoUrl)
+                            .map(ShowPhoto::getPhoto)
                             .orElse("");
 
                     return new ShowRes(
@@ -81,7 +81,7 @@ public class ShowService {
                 .map(show-> {
 
                     var photos = show.getPhoto().stream()
-                            .map(ShowPhoto::getPhotoUrl)
+                            .map(ShowPhoto::getPhoto)
                             .collect(Collectors.toList());
 
                     String formattedDay = formatDay(show.getDay());
