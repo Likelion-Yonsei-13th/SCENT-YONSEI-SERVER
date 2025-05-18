@@ -17,9 +17,9 @@ public class BoothController {
     @GetMapping
     public ResponseEntity<BoothListResponseDto> listBooths(
             @RequestParam(defaultValue = "")    String search,
-            @RequestParam(defaultValue = "")    String section,
+            @RequestParam(defaultValue = "백양로")    String section,
             @RequestParam(defaultValue = "")    String category,
-            @RequestParam(defaultValue = "1")   int day
+            @RequestParam(defaultValue = "2")   int day
     ) {
         var resp = boothService.getBooths(search, section, category, day);
         return ResponseEntity.ok(resp);
