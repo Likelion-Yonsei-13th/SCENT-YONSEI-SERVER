@@ -18,13 +18,13 @@ public class Booth {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = true, length = 100)
     private String name;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = true, length = 50)
     private String organization;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int day;
 
     @Column(length = 10)
@@ -44,10 +44,10 @@ public class Booth {
     private String locationPhoto;
 
     @Column(name = "is_food_booth", nullable = false)
-    private boolean isFoodBooth;
+    private Boolean isFoodBooth;
 
     @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", updatable = true)
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
