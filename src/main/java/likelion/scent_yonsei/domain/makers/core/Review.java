@@ -3,14 +3,17 @@ package likelion.scent_yonsei.domain.makers.core;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="review")
 @Getter
 @Setter
-@NoArgsConstructor
-
+@RequiredArgsConstructor
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +22,8 @@ public class Review {
     @Column(name = "review")
     private String review;
 
-    public Review(String review) {
-        this.review = review;
-    }
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
 }

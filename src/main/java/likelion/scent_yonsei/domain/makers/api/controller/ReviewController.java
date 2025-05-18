@@ -20,6 +20,6 @@ public class ReviewController {
 
     @PostMapping("/review")
     public ResponseEntity<Response<ReviewRes>> createReviews(@RequestBody ReviewReq req){
-        return ResponseEntity.ok(reviewService.save(req.content()));
+        return ResponseEntity.status(201).body(reviewService.save(req.content()));
     }
 }
