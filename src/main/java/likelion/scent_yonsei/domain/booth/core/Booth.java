@@ -44,7 +44,7 @@ public class Booth {
     private String locationPhoto;
 
     @Column(name = "is_food_booth", nullable = false)
-    private boolean isFoodBooth;
+    private Boolean isFoodBooth;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -72,7 +72,7 @@ public class Booth {
                  String instagram,
                  Long liked,
                  String locationPhoto,
-                 boolean isFoodBooth) {
+                 Boolean isFoodBooth) {
         this.name = name;
         this.organization = organization;
         this.day = day;

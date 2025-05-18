@@ -18,10 +18,10 @@ public class FoodTruck {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = true, length = 50)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int day;
 
     @Column(length = 50)
