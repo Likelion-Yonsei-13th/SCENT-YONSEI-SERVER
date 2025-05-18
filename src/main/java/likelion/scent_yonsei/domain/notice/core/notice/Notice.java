@@ -2,6 +2,10 @@ package likelion.scent_yonsei.domain.notice.core.notice;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "notice")
@@ -28,9 +32,11 @@ public class Notice {
     @Column(name = "category")
     private String category;
 
-    @Column(name = "created_at")
-    private String createdAt;
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
-    private String updatedAt;
+    private LocalDateTime updatedAt;
 }

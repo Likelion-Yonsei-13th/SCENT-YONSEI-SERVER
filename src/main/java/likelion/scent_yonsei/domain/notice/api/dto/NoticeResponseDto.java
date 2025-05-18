@@ -1,7 +1,7 @@
 package likelion.scent_yonsei.domain.notice.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import likelion.scent_yonsei.domain.notice.core.notice.Notice;
+import java.time.LocalDateTime;
 
 public record NoticeResponseDto(
         @JsonProperty("noticeId") Long id,
@@ -9,20 +9,7 @@ public record NoticeResponseDto(
         String content,
         boolean importance,
         String category,
-        @JsonProperty("created_at") String createdAt,
-        @JsonProperty("updated_at") String updatedAt,
+        @JsonProperty("created_at") LocalDateTime createdAt,
+        @JsonProperty("updated_at") LocalDateTime updatedAt,
         String photoUrl
-) {
-    public static NoticeResponseDto fromEntity(Notice notice, String photoUrl) {
-        return new NoticeResponseDto(
-                notice.getId(),
-                notice.getTitle(),
-                notice.getContent(), // 기존 content 필드 유지
-                notice.isImportance(),
-                notice.getCategory(),
-                notice.getCreatedAt(),
-                notice.getUpdatedAt(),
-                photoUrl
-        );
-    }
-}
+) {}

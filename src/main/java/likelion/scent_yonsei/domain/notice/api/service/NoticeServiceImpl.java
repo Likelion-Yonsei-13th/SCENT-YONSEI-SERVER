@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +25,7 @@ public class NoticeServiceImpl implements NoticeService {
     /**
      * 공지사항 목록 필터링 조회 (대표 사진 포함)
      */
+    @Transactional(readOnly = true)
     @Override
     public List<NoticeResponseDto> getFilteredNotices(String search, String category) {
         boolean hasSearch = search != null && !search.trim().isEmpty();
@@ -44,8 +46,17 @@ public class NoticeServiceImpl implements NoticeService {
         return notices.stream()
                 .map(notice -> {
                     List<NoticePhoto> photos = noticePhotoRepository.findAllByNoticeId(notice.getId());
-                    String firstPhotoUrl = photos.isEmpty() ? null : photos.get(0).getPhoto(); // 기존 getPhoto() 그대로 유지
-                    return NoticeResponseDto.fromEntity(notice, firstPhotoUrl); // photoUrl 포함한 생성자 사용
+                    String photoUrl = photos.isEmpty() ? null : photos.get(0).getPhoto();
+                    return new NoticeResponseDto(
+                            notice.getId(),
+                            notice.getTitle(),
+                            notice.getContent(),
+                            notice.isImportance(),
+                            notice.getCategory(),
+                            notice.getCreatedAt(),
+                            notice.getUpdatedAt(),
+                            photoUrl
+                    );
                 })
                 .collect(Collectors.toList());
     }
@@ -53,6 +64,7 @@ public class NoticeServiceImpl implements NoticeService {
     /**
      * 공지사항 상세 정보 조회
      */
+    @Transactional(readOnly = true)
     @Override
     public Optional<NoticeDetailResponseDto> getNoticeDetail(Long noticeId) {
         return noticeRepository.findById(noticeId).map(notice -> {
@@ -60,7 +72,16 @@ public class NoticeServiceImpl implements NoticeService {
                     .map(NoticePhoto::getPhoto)
                     .collect(Collectors.toList());
 
-            return NoticeDetailResponseDto.fromEntity(notice, photoUrls);
+            return new NoticeDetailResponseDto(
+                    notice.getId(),
+                    notice.getTitle(),
+                    notice.getContent(),
+                    notice.isImportance(),
+                    notice.getCategory(),
+                    notice.getCreatedAt(),
+                    notice.getUpdatedAt(),
+                    photoUrls
+            );
         });
     }
 }
