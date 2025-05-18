@@ -92,7 +92,7 @@ public class BoothService {
             return boothRepo.findById(id)
                     .<DetailResponseDto<?>>map(b -> {
                         List<MenuDto> menu = List.of();
-                        if (b.isFoodBooth()) {
+                        if (Boolean.TRUE.equals(b.getIsFoodBooth())) {
                             menu = b.getMenus().stream()
                                     .map(m -> new MenuDto(m.getId(), m.getName(), m.getPrice()))
                                     .collect(Collectors.toList());
