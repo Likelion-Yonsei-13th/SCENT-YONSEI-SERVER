@@ -27,7 +27,7 @@ public class NoticeController {
     @GetMapping
     public ResponseEntity<NoticeListResponseDto<NoticeListResponseDto.NoticeListData<List<NoticeResponseDto>>>> getNotices(
             @RequestParam(required = false, defaultValue = "") String search,
-            @RequestParam(required = false, defaultValue = "블루런") String category) {
+            @RequestParam(required = false, defaultValue = "") String category) {
 
         try {
             List<NoticeResponseDto> data = noticeService.getFilteredNotices(search, category);
