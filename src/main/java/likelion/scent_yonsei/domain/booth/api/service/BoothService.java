@@ -1,10 +1,7 @@
 package likelion.scent_yonsei.domain.booth.api.service;
 
 import likelion.scent_yonsei.domain.booth.api.dto.*;
-import likelion.scent_yonsei.domain.booth.core.Booth;
-import likelion.scent_yonsei.domain.booth.core.BoothRepository;
-import likelion.scent_yonsei.domain.booth.core.FoodTruck;
-import likelion.scent_yonsei.domain.booth.core.FoodTruckRepository;
+import likelion.scent_yonsei.domain.booth.core.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -97,16 +94,17 @@ public class BoothService {
                                     .map(m -> new MenuDto(m.getId(), m.getName(), m.getPrice()))
                                     .collect(Collectors.toList());
                         }
-                        String photo = b.getPhotos().isEmpty()
-                                ? ""
-                                : b.getPhotos().get(0).getPhoto();
+                        // ─── 사진 전체를 URL 리스트로 수집
+                        List<String> photoUrls = b.getPhotos().stream()
+                                .map(BoothPhoto::getPhoto)        // BoothPhoto#getPhoto
+                                .toList();
 
                         BoothDetailDto dto = new BoothDetailDto(
                                 b.getId(),
                                 b.getName(),
                                 b.getOrganization(),
                                 b.getInstagram(),
-                                photo,
+                                photoUrls,
                                 b.getDescription(),
                                 menu
                         );
