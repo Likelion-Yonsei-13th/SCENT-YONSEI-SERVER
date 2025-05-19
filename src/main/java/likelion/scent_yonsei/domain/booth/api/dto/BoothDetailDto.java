@@ -9,7 +9,7 @@ public record BoothDetailDto(
         String      name,
         String      organization,
         String      instagram,
-        String      photo,
+        @JsonProperty("photos")       List<String> photos,
         String      description,
         List<MenuDto> menu
 ) {}
