@@ -37,15 +37,35 @@ jobs:
           ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
       # 6) Copy the built JAR to the EC2 instance
-      - name: Copy JAR to server
+      - name: Copy JAR to server 1
         run: |
           scp build/libs/*.jar \
-            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.REMOTE_APP_PATH }}/scent-yonsei.jar
+            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST_1 }}:${{ secrets.REMOTE_APP_PATH }}/scent-yonsei.jar
+
+      - name: Copy JAR to server 2
+        run: |
+          scp build/libs/*.jar \
+            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST_2 }}:${{ secrets.REMOTE_APP_PATH }}/scent-yonsei.jar
 
       # 7) Restart the service on the EC2 instance
-      - name: Restart service on server
+      - name: Restart service on server 1
         run: |
-          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST_1 }} << 'EOF'
+            # (1) Stop any existing instance
+            pkill -f 'scent-yonsei.jar' || true
+
+            # (2) Start new instance, logging to the same directory as the JAR
+            nohup java -jar ${{ secrets.REMOTE_APP_PATH }}/scent-yonsei.jar \
+              --spring.config.location=file:${{ secrets.REMOTE_CONFIG_PATH }} \
+              --spring.profiles.active=prod \
+              > ${{ secrets.REMOTE_APP_PATH }}/app.log 2>&1 &
+
+            exit
+          EOF
+
+      - name: Restart service on server 2
+        run: |
+          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST_2 }} << 'EOF'
             # (1) Stop any existing instance
             pkill -f 'scent-yonsei.jar' || true
 
