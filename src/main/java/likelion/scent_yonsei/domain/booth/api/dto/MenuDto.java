@@ -5,5 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record MenuDto(
         @JsonProperty("menu_id") Long   menuId,
         @JsonProperty("menu_name") String menuName,
-        int    price
+        int    price,
+        @JsonProperty("menu_photo") String menuPhoto
 ) {}

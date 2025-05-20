@@ -92,7 +92,7 @@ public class BoothService {
                         List<MenuDto> menu = List.of();
                         if (Boolean.TRUE.equals(b.getIsFoodBooth())) {
                             menu = b.getMenus().stream()
-                                    .map(m -> new MenuDto(m.getId(), m.getName(), m.getPrice()))
+                                    .map(m -> new MenuDto(m.getId(), m.getName(), m.getPrice(), m.getPhoto() == null ? "" : m.getPhoto()))
                                     .collect(Collectors.toList());
                         }
                         // ─── 사진 전체를 URL 리스트로 수집
@@ -104,6 +104,8 @@ public class BoothService {
                                 b.getId(),
                                 b.getName(),
                                 b.getOrganization(),
+                                b.getSection(),
+                                b.getLocation(),
                                 b.getInstagram(),
                                 photoUrls,
                                 b.getDescription(),
@@ -130,7 +132,7 @@ public class BoothService {
             return truckRepo.findById(id)
                     .<DetailResponseDto<?>>map(t -> {
                         List<MenuDto> menu = t.getMenus().stream()
-                                .map(m -> new MenuDto(m.getId(), m.getName(), m.getPrice()))
+                                .map(m -> new MenuDto(m.getId(), m.getName(), m.getPrice(), m.getPhoto() == null ? "" : m.getPhoto()))
                                 .collect(Collectors.toList());
 
                         // photo 컬럼에서 바로 꺼내옴 (null 체크)
@@ -139,6 +141,7 @@ public class BoothService {
                         FoodTruckDetailDto dto = new FoodTruckDetailDto(
                                 t.getId(),
                                 t.getName(),
+                                t.getSection(),
                                 t.getInstagram(),
                                 photoUrl,
                                 t.getDescription(),

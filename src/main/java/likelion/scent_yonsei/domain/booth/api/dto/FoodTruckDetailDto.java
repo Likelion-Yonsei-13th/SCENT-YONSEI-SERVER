@@ -7,6 +7,7 @@ import java.util.List;
 public record FoodTruckDetailDto(
         @JsonProperty("foodTruckId") Long         foodTruckId,
         String       name,
+        @JsonProperty("section")     String        section,
         String       instagram,
         @JsonProperty("photo")         String photo,
         String       description,
