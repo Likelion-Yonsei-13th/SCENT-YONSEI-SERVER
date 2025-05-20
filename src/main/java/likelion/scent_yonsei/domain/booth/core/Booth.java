@@ -30,7 +30,8 @@ public class Booth {
     @Column(length = 10)
     private String section;
 
-    private Integer location;
+    @Column(length = 100)
+    private String location;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -67,7 +68,7 @@ public class Booth {
                  String organization,
                  int day,
                  String section,
-                 Integer location,
+                 String location,
                  String description,
                  String instagram,
                  Long liked,
