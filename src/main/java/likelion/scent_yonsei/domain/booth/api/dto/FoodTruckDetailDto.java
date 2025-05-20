@@ -8,6 +8,7 @@ public record FoodTruckDetailDto(
         @JsonProperty("foodTruckId") Long         foodTruckId,
         String       name,
         String       instagram,
+        @JsonProperty("photo")         String photo,
         String       description,
         List<MenuDto> menu
 ) {}

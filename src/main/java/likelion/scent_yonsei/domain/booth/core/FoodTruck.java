@@ -33,6 +33,9 @@ public class FoodTruck {
     @Column(columnDefinition = "TEXT")
     private String instagram;
 
+    @Column(length = 150)
+    private String photo;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
