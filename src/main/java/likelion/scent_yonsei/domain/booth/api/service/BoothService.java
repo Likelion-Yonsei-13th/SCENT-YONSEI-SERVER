@@ -44,9 +44,10 @@ public class BoothService {
                 .map(t -> new FoodTruckSummaryDto(
                         t.getId(),
                         t.getName(),
-                        t.getMenus().isEmpty()
+                        // photo 컬럼에서 바로 꺼내옵니다. null 체크만 해주세요.
+                        t.getPhoto() == null
                                 ? ""
-                                : t.getMenus().get(0).getPhoto()
+                                : t.getPhoto()
                 ))
                 .toList();
 
@@ -132,10 +133,14 @@ public class BoothService {
                                 .map(m -> new MenuDto(m.getId(), m.getName(), m.getPrice()))
                                 .collect(Collectors.toList());
 
+                        // photo 컬럼에서 바로 꺼내옴 (null 체크)
+                        String photoUrl = t.getPhoto() != null ? t.getPhoto() : "";
+
                         FoodTruckDetailDto dto = new FoodTruckDetailDto(
                                 t.getId(),
                                 t.getName(),
                                 t.getInstagram(),
+                                photoUrl,
                                 t.getDescription(),
                                 menu
                         );
