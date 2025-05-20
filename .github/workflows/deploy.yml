@@ -34,7 +34,8 @@ jobs:
       - name: Add EC2 host to known hosts
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.DEPLOY_HOST_1 }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.DEPLOY_HOST_2 }} >> ~/.ssh/known_hosts
 
       # 6) Copy the built JAR to the EC2 instance
       - name: Copy JAR to server 1
