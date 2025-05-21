@@ -20,12 +20,14 @@ public class BoothService {
             String search,
             String section,
             String category,
-            int    day
+            int    day,
+            String foodType
     ) {
         // 빈문자열→null, category 빈→"전체"
         String q = (search   == null || search.isBlank())   ? null : search;
         String s = (section  == null || section.isBlank())  ? null : section;
         String c = (category == null || category.isBlank()) ? "전체" : category;
+        String ft = (foodType== null || foodType.isBlank())? "전체" : foodType;
 
         // 1) booth 리스트
         List<BoothSummaryDto> booths = boothRepo.findFiltered(q, s, day, c).stream()
@@ -40,15 +42,23 @@ public class BoothService {
                 .toList();
 
         // 2) foodTruck 리스트
-        List<FoodTruckSummaryDto> trucks = truckRepo.findFiltered(q, s, day, c).stream()
-                .map(t -> new FoodTruckSummaryDto(
-                        t.getId(),
-                        t.getName(),
-                        // photo 컬럼에서 바로 꺼내옵니다. null 체크만 해주세요.
-                        t.getPhoto() == null
-                                ? ""
-                                : t.getPhoto()
-                ))
+        List<FoodTruckSummaryDto> trucks = truckRepo.findFiltered(q, day, c, ft).stream()
+                .map(t -> {
+                    // 1) 메뉴 리스트 매핑 (menu_photo 포함)
+                    List<String> menuNames = t.getMenus().stream()
+                            .map(m -> m.getName())
+                            .toList();
+
+
+                    // 2) 푸드트럭 요약 DTO 생성
+                    return new FoodTruckSummaryDto(
+                            t.getId(),
+                            t.getName(),
+                            t.getPhoto() == null ? "" : t.getPhoto(),
+                            t.getFoodType(),   // 새로 추가된 컬럼
+                            menuNames          // 메뉴 리스트
+                    );
+                })
                 .toList();
 
         // 3) 결과 조합하여 DTO 생성

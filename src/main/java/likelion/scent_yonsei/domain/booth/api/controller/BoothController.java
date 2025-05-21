@@ -19,9 +19,10 @@ public class BoothController {
             @RequestParam(defaultValue = "")    String search,
             @RequestParam(defaultValue = "백양로")    String section,
             @RequestParam(defaultValue = "부스")    String category,
-            @RequestParam(defaultValue = "3")   int day
+            @RequestParam(defaultValue = "3")   int day,
+            @RequestParam(required = false, defaultValue = "전체") String foodType
     ) {
-        var resp = boothService.getBooths(search, section, category, day);
+        var resp = boothService.getBooths(search, section, category, day, foodType);
         return ResponseEntity.ok(resp);
     }
 

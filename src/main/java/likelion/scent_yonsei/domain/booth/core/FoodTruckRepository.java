@@ -13,14 +13,14 @@ public interface FoodTruckRepository extends JpaRepository<FoodTruck, Long> {
       WHERE (:search      IS NULL
              OR t.name        LIKE %:search%
              OR t.description LIKE %:search%)
-        AND (:section IS NULL OR t.section = :section)
         AND t.day = :day
         AND (:category = '전체' OR :category = '푸드트럭')
+        AND (:foodType = '전체' OR t.foodType = :foodType)
     """)
     List<FoodTruck> findFiltered(
             @Param("search")   String search,
-            @Param("section")  String section,
             @Param("day")      int day,
-            @Param("category") String category
+            @Param("category") String category,
+            @Param("foodType") String foodType
     );
 }
