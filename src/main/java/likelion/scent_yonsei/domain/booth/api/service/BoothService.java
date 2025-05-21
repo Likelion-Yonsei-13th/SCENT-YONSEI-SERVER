@@ -86,7 +86,7 @@ public class BoothService {
     @Transactional(readOnly = true)
     public DetailResponseDto<?> getDetail(Long id, String category) {
         // BOOTH 카테고리
-        if ("booth".equalsIgnoreCase(category)) {
+        if ("부스".equalsIgnoreCase(category)) {
             return boothRepo.findById(id)
                     .<DetailResponseDto<?>>map(b -> {
                         List<MenuDto> menu = List.of();
@@ -115,7 +115,7 @@ public class BoothService {
                                 200,
                                 true,
                                 "부스 상세 정보 반환 성공",
-                                "booth",
+                                "부스",
                                 dto
                         );
                     })
@@ -123,12 +123,12 @@ public class BoothService {
                             404,
                             false,
                             "boothId에 맞는 부스 정보가 존재하지 않습니다.",
-                            "booth",
+                            "부스",
                             new IdErrorDto(id, null)
                     ));
         }
         // FOODTRUCK 카테고리
-        else if ("foodTruck".equalsIgnoreCase(category)) {
+        else if ("푸드트럭".equalsIgnoreCase(category)) {
             return truckRepo.findById(id)
                     .<DetailResponseDto<?>>map(t -> {
                         List<MenuDto> menu = t.getMenus().stream()
@@ -151,7 +151,7 @@ public class BoothService {
                                 200,
                                 true,
                                 "부스 상세 정보 반환 성공",
-                                "foodTruck",
+                                "푸드트럭",
                                 dto
                         );
                     })
@@ -159,7 +159,7 @@ public class BoothService {
                             404,
                             false,
                             "foodTruckId에 맞는 푸드트럭 정보가 존재하지 않습니다.",
-                            "foodTruck",
+                            "푸드트럭",
                             new IdErrorDto(null, id)
                     ));
         }

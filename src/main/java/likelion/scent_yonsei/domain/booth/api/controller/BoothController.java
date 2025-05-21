@@ -18,7 +18,7 @@ public class BoothController {
     public ResponseEntity<BoothListResponseDto> listBooths(
             @RequestParam(defaultValue = "")    String search,
             @RequestParam(defaultValue = "백양로")    String section,
-            @RequestParam(defaultValue = "")    String category,
+            @RequestParam(defaultValue = "부스")    String category,
             @RequestParam(defaultValue = "3")   int day
     ) {
         var resp = boothService.getBooths(search, section, category, day);
@@ -28,7 +28,7 @@ public class BoothController {
     @GetMapping("/{id}")
     public ResponseEntity<DetailResponseDto<?>> getDetail(
             @PathVariable Long id,
-            @RequestParam(value = "category", defaultValue = "booth") String category
+            @RequestParam(value = "category", defaultValue = "부스") String category
     ) {
         var resp = boothService.getDetail(id, category);
         return ResponseEntity.ok(resp);
