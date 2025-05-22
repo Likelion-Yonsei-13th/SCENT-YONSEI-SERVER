@@ -36,6 +36,9 @@ public class FoodTruck {
     @Column(length = 150)
     private String photo;
 
+    @Column(name = "food_type", nullable = false, length = 10)
+    private String foodType;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -52,11 +55,13 @@ public class FoodTruck {
                      int day,
                      String section,
                      String description,
+                     String foodType,
                      String instagram) {
         this.name = name;
         this.day = day;
         this.section = section;
         this.description = description;
         this.instagram = instagram;
+        this.foodType = foodType;
     }
 }
