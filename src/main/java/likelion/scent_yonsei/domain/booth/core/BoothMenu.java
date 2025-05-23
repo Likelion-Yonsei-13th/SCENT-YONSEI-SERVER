@@ -15,8 +15,8 @@ public class BoothMenu {
     @Column(nullable = false, length = 255)
     private String name;
 
-    @Column(nullable = false)
-    private int price;
+    @Column(nullable = true)
+    private Integer price;
 
     @Column(length = 100)
     private String photo;
@@ -27,7 +27,7 @@ public class BoothMenu {
 
     @Builder
     public BoothMenu(String name,
-                     int price,
+                     Integer price,
                      String photo,
                      Booth booth) {
         this.name = name;
