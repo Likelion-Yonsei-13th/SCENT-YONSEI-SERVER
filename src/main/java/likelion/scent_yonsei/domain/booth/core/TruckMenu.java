@@ -15,7 +15,7 @@ public class TruckMenu {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int price;
 
     @Column(length = 100)
