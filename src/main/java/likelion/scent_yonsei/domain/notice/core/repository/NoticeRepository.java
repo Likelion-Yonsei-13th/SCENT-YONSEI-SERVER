@@ -10,13 +10,18 @@ import java.util.List;
 
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
-    List<Notice> findByCategory(String category);
+    List<Notice> findAllByOrderByCreatedAtDesc();
 
-    List<Notice> findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(String title, String content);
+    List<Notice> findByCategoryOrderByCreatedAtDesc(String category);
+
+    List<Notice> findByTitleContainingIgnoreCaseOrContentContainingIgnoreCaseOrderByCreatedAtDesc(String title, String content);
 
     @Query("SELECT n FROM Notice n WHERE n.category = :category AND " +
             "(LOWER(n.title) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-            "OR LOWER(n.content) LIKE LOWER(CONCAT('%', :keyword, '%')))")
-    List<Notice> findByCategoryAndTitleOrContent(@Param("category") String category,
-                                                 @Param("keyword") String keyword);
+            " OR LOWER(n.content) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +
+            "ORDER BY n.createdAt DESC")
+    List<Notice> findByCategoryAndTitleOrContentOrderByCreatedAtDesc(
+            @Param("category") String category,
+            @Param("keyword") String keyword
+    );
 }

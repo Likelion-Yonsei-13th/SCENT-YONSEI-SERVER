@@ -34,13 +34,13 @@ public class NoticeServiceImpl implements NoticeService {
         List<Notice> notices;
 
         if (hasSearch && hasCategory) {
-            notices = noticeRepository.findByCategoryAndTitleOrContent(category, search);
+            notices = noticeRepository.findByCategoryAndTitleOrContentOrderByCreatedAtDesc(category, search);
         } else if (hasSearch) {
-            notices = noticeRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(search, search);
+            notices = noticeRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCaseOrderByCreatedAtDesc(search, search);
         } else if (hasCategory) {
-            notices = noticeRepository.findByCategory(category);
+            notices = noticeRepository.findByCategoryOrderByCreatedAtDesc(category);
         } else {
-            notices = noticeRepository.findAll();
+            notices = noticeRepository.findAllByOrderByCreatedAtDesc();
         }
 
         return notices.stream()
