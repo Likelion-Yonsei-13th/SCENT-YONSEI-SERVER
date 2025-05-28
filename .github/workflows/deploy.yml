@@ -56,7 +56,7 @@ jobs:
             pkill -f 'scent-yonsei.jar' || true
 
             # (2) Start new instance, logging to the same directory as the JAR
-            nohup java -jar ${{ secrets.REMOTE_APP_PATH }}/scent-yonsei.jar \
+            nohup java -Duser.timezone=Asia/Seoul -jar ${{ secrets.REMOTE_APP_PATH }}/scent-yonsei.jar \
               --spring.config.location=file:${{ secrets.REMOTE_CONFIG_PATH }} \
               --spring.profiles.active=prod \
               > ${{ secrets.REMOTE_APP_PATH }}/app.log 2>&1 &
@@ -71,7 +71,7 @@ jobs:
             pkill -f 'scent-yonsei.jar' || true
 
             # (2) Start new instance, logging to the same directory as the JAR
-            nohup java -jar ${{ secrets.REMOTE_APP_PATH }}/scent-yonsei.jar \
+            nohup java -Duser.timezone=Asia/Seoul -jar ${{ secrets.REMOTE_APP_PATH }}/scent-yonsei.jar \
               --spring.config.location=file:${{ secrets.REMOTE_CONFIG_PATH }} \
               --spring.profiles.active=prod \
               > ${{ secrets.REMOTE_APP_PATH }}/app.log 2>&1 &
