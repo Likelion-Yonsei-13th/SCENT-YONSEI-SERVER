@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
@@ -30,7 +31,7 @@ public class ShowService {
     @Transactional(readOnly = true)
     public Response<?> showAll(Integer day) {
 
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
         // live 공연
         List<LiveRes> live = showRepository.findLiveShowRes(now).stream()
